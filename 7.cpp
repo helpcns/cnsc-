@@ -9,30 +9,32 @@ unsigned long long Rcon[11] = {
  0x00000000, 0x01000000, 0x02000000, 0x04000000, 0x08000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x1b000000, 0x36000000 
 };
 
-string w[44];
-string rotLeft(string word)
+string w[44]; string rotLeft(string word)
 { 
-return word.substr(8) + word.substr(0,8);
-}
-string SBoxFun(string word)
+return word.substr(8) + word.substr(0,8); 
+}string SBoxFun(string word)
+{
+string res = ""; 
+for(int i=0; i<4; i++)
 { 
-string res = "";
+string byte = word.substr(i*8, 8); 
 int row = bitset<4>( byte.substr(0,4) ).to_ulong(); 
 int col = bitset<4>( byte.substr(4,4) ).to_ulong(); 
-res += bitset<8>(sbox[row][col]).to_string();
+res += bitset<8>(sbox[row][col]).to_string(); 
 }
 return res; 
 }
-string XOR(string x, string y)
-{ 
-string res = ""; 
-for(int i=0;i<x.length();i++)
+string XOR(string x, string y){ string res = ""; 
+for(int i=0; i<x.length(); i++) 
 {
 res += (x[i] == y[i]) ? "0" : "1"; 
-}return res; 
+}
+return res; 
 }
 
-int main(){ unsigned long long hexkey1, hexkey2; 
+int main()
+{ 
+unsigned long long hexkey1, hexkey2; 
 cout << "\nEnter first 64-bit key in hexadecimal(16-digits) : " ; 
 cin >> hex >> hexkey1;
 string key = bitset<64>(hexkey1).to_string() + bitset<64>(hexkey2).to_string(); 
